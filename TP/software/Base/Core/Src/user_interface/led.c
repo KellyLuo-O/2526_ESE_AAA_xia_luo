@@ -43,3 +43,4 @@ int led_control(h_shell_t* h_shell, int argc, char** argv)
 	h_shell->drv.transmit(h_shell->print_buffer, size);
 	return HAL_ERROR;
 }
+
