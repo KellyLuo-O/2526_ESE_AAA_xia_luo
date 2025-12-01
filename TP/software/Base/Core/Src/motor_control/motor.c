@@ -18,8 +18,6 @@ float dutyCycle = 0.6f;
 void motor_init(void)
 {
 
-	HAL_TIM_Base_Start(&htim1);
-
 	__HAL_TIM_SET_AUTORELOAD(&htim1, PWM_ARR);
 
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)(dutyCycle * PWM_ARR));
@@ -54,6 +52,8 @@ int motor_control(h_shell_t* h_shell, int argc, char** argv)
 		return HAL_ERROR;
 	}
 	dutyCycle = (float)speedValue / (float)MOTOR_SPEED_MAX;
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)(dutyCycle * PWM_ARR));
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)((1 - dutyCycle) * PWM_ARR));
 
 	size = snprintf(h_shell->print_buffer, SHELL_PRINT_BUFFER_SIZE, "Speed %d tr/min ==> DutyCycle %.2f\r\n", speedValue, dutyCycle);
 	h_shell->drv.transmit(h_shell->print_buffer, size);
