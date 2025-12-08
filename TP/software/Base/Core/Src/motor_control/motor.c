@@ -102,18 +102,34 @@ int motor_dutycycle(h_shell_t* h_shell, int argc, char** argv)
 
 	value = atoi(argv[1]);
 
+	// on vérifie que l'argument est bien entre 0 et 100
 	if(value > 100 || value < 0){
 		size = snprintf(h_shell->print_buffer, SHELL_PRINT_BUFFER_SIZE, "duty cycle valeur de 0 à 100\r\n");
 		h_shell->drv.transmit(h_shell->print_buffer, size);
 		return HAL_ERROR;
 	}
+
+	//	float previous_dutyCycle = dutyCycle;
+	//	for (int i=1; i<=3; i++)
+	//	{
+	//		float step = (((float)value/(float)100.0f) - previous_dutyCycle) / 3.0f;
+	//		dutyCycle = previous_dutyCycle + step * (float)i;
+	//
+	//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)(dutyCycle * PWM_ARR));
+	//		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)((1 - dutyCycle) * PWM_ARR));
+	//
+	//		size = snprintf(h_shell->print_buffer, SHELL_PRINT_BUFFER_SIZE, "DutyCycle %.2f\r\n", dutyCycle);
+	//		h_shell->drv.transmit(h_shell->print_buffer, size);
+	//	}
+
 	dutyCycle = (float)value/ (float)100.0f;
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)(dutyCycle * PWM_ARR));
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)((1 - dutyCycle) * PWM_ARR));
 
 	size = snprintf(h_shell->print_buffer, SHELL_PRINT_BUFFER_SIZE, "DutyCycle %.2f\r\n", dutyCycle);
 	h_shell->drv.transmit(h_shell->print_buffer, size);
-	return HAL_ERROR;
+
+	return HAL_OK;
 }
 
 
@@ -127,11 +143,19 @@ int motor_start(h_shell_t* h_shell, int argc, char** argv)
 		return HAL_ERROR;
 	}
 
+	dutyCycle = 0.50f;
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)(dutyCycle * PWM_ARR));
+	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, (uint32_t)((1 - dutyCycle) * PWM_ARR));
+
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 
 	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+
+	size = snprintf(h_shell->print_buffer, SHELL_PRINT_BUFFER_SIZE, "PWM started avec dutyCycle %.2f\r\n", dutyCycle);
+	h_shell->drv.transmit(h_shell->print_buffer, size);
+	return HAL_OK;
 }
 
 
@@ -149,4 +173,5 @@ int motor_stop(h_shell_t* h_shell, int argc, char** argv)
 	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
 	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+	return HAL_OK;
 }
