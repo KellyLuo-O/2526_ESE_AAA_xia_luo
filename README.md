@@ -54,3 +54,6 @@ avec $N_{PPR}$ : Le nombre d'impulsions par tour de l'encodeur.
 $4$ : Facteur de multiplication du STM32 (mode quadrature).
 
 $60$ : Conversion minutes en secondes.
+
+
+<img src="images/vitesse.png" width="500"/>
