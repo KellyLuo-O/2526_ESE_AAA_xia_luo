@@ -1,1 +1,6 @@
 **/Debug/
+
+# KiCad backups
+*-backups/
+_autosave-*
+*.lck
