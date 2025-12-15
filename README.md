@@ -27,3 +27,15 @@
 - Résolution de 10 bits
    - On a ARR = 4250 > 1024
         
+## 7. Commande en boucle ouverte, mesure de Vitesse et de courant
+
+<img src="images/commande_tension_courant.png" width="500"/>
+
+### 7.2. Mesure de courant
+
+<img src="images/courant.png" width="500"/>
+
+$$V_{out} = V_{ref} + G \cdot I_P$$
+avec V_{ref} = 1.65V; G = 50mV/A; I_P le courant à mesurer.
+
+<img src="images/pin.png" width="500"/>
