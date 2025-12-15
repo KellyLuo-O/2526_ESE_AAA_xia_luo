@@ -8,6 +8,7 @@
 #ifndef INC_MOTOR_CONTROL_MOTOR_H_
 #define INC_MOTOR_CONTROL_MOTOR_H_
 
+
 #include "user_interface/shell.h"
 
 void motor_init(void);

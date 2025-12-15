@@ -8,7 +8,6 @@
 #include "tim.h"
 #include "motor_control/motor.h"
 
-
 #define PWM_ARR 4250-1
 
 #define MOTOR_SPEED_MAX 3000
