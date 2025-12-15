@@ -36,6 +36,21 @@
 <img src="images/courant.png" width="500"/>
 
 $$V_{out} = V_{ref} + G \cdot I_P$$
-avec V_{ref} = 1.65V; G = 50mV/A; I_P le courant à mesurer.
+
+avec $$V_{ref}$$ = 1.65V.
+
+G = 50mV/A.
+
+$$I_P$$ le courant à mesurer.
 
 <img src="images/pin.png" width="500"/>
+
+### 7.3. Mesure de vitesse
+
+$$H(s) = \frac{\text{Mesure (tops/s)}}{\text{Vitesse (tr/min)}} = \frac{4 \cdot N_{PPR}}{60}$$
+
+avec $N_{PPR}$ : Le nombre d'impulsions par tour de l'encodeur.
+
+$4$ : Facteur de multiplication du STM32 (mode quadrature).
+
+$60$ : Conversion minutes en secondes.
